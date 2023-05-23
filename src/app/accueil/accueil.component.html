@@ -1,0 +1,421 @@
+<app-menu></app-menu>
+
+
+  <div class="pcoded-content">
+      <!-- [ breadcrumb ] start -->
+      <div >
+          <div>
+             <div class="divlink_search">
+              <div class="link_">
+                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="margin-top: 80px;">
+                  <li class="nav-item">
+                      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" style="font-weight: bold;">Cas d'utilisation agriculture</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false" style="font-weight: bold;">Cas d'utilisation de livraison</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="pills-device-tab" data-toggle="pill" href="#pills-device" role="tab" aria-controls="pills-device" aria-selected="false" style="font-weight: bold;">Enregistrer un device</a>
+                </li>
+                </ul>
+              </div>
+
+              <div class="search-hero">
+                <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Recherche...">
+              </div>
+             </div>
+
+              <div class="tab-content" id="pills-tabContent">
+                  <div class="mt-5 tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                      <section class="wrapper">
+                          <div class="container-fostrap">
+                              <div class="content">
+                                  <div class="container">
+                                      <div class="row">
+                                        <div *ngFor="let robot of donR | filter:searchText | paginate: { itemsPerPage: tableSize,currentPage: page, totalItems:count}; let i = index" class="col-xs-12 col-lg-3">
+                                          <div class="card">
+
+                                              <a class="img-card" data-toggle="modal" data-target="#hostname">
+                                                  <img src="{{robot.img}}" />
+                                            </a>
+                                            <small class="cart-status" style="position: absolute; top:5px;  right:2%; "></small>
+                                              <div class="card-content">
+                                                 <div class="row">
+                                                  <div class="col-md-6">
+                                                    <h4 class="card-title">
+                                                      {{robot.libele}}
+                                                   </h4>
+                                                   <p class="">
+                                                     {{robot.type}}
+                                                   </p>
+                                                  </div>
+
+                                                  <div class="col-md-6 p-25">13/09/2023</div>
+                                                 </div>
+                                              </div>
+
+
+                                          </div>
+                                      </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </section>
+                  </div>
+                  <div class="mt-5 tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                      <section class="wrapper">
+                          <div class="container-fostrap">
+                              <div>
+                              </div>
+                              <div class="content">
+                                <div class="container">
+                                  <div class="row">
+                                    <div *ngFor="let robot of donD | filter:searchText | paginate: { itemsPerPage: tableSize,currentPage: page, totalItems:count}; let i = index" class="col-xs-12 col-lg-3">
+                                      <div class="card">
+                                          <a class="img-card" (click)="selectionEngin()">
+                                              <img src="{{robot.img}}" />
+                                        </a>
+                                        <small class="cart-status" style="position: absolute; top:5px;  right:2%;"></small>
+
+                                        <div class="row">
+                                          <div class="col-md-6">
+                                            <div class="card-content">
+                                              <h4 class="card-title">
+                                                <a href=""> {{robot.libele}}
+                                                </a>
+                                              </h4>
+                                              <p class="">
+                                                {{robot.type}}
+                                              </p>
+                                          </div>
+
+                                          </div>
+                                          <div class="col-md-6 p-40">13/09/2023</div>
+                                        </div>
+
+                                      </div>
+                                  </div>
+                                  </div>
+                              </div>
+                              </div>
+                          </div>
+                      </section>
+                  </div>
+                  <div class="mt-5 tab-pane fade" id="pills-device" role="tabpanel" aria-labelledby="pills-device-tab">
+                    <section class="wrapper">
+                        <div class="container-fostrap">
+                            <div>
+                            </div>
+                            <div class="content">
+                              <div class="container">
+                                <div class="row" style="position:relative; left: 15em">
+                                  <div class="col-xs-12 col-lg-3 ">
+                                    <div class="card">
+                                        <a class="img-card" data-toggle="modal" data-target="#modalagricol">
+                                            <img src="/assets/images/robotrecolte.jpg" />
+                                      </a>
+                                        <div class="card-content">
+                                            <h4 class="card-title">
+                                              <span class="badge badge-pill" style="background-color: #f16e00;">Robot Agriculteur</span>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-lg-3">
+                                  <div class="card">
+                                      <a class="img-card" data-toggle="modal" data-target="#modaldrone">
+                                          <img src=" /assets/images/dronelivreur.jpg" />
+                                      </a>
+                                      <div class="card-content">
+                                          <h4 class="card-title">
+                                            <span class="badge badge-pill" style="background-color: #f16e00;">Drone livreur</span>
+                                          </h4>
+                                      </div>
+
+                                  </div>
+                              </div>
+                              <div class="col-xs-12 col-lg-3">
+                                <div class="card">
+                                  <a class="img-card" data-toggle="modal" data-target="#modaltype">
+                                        <img src="/assets/images/autretype.jpg" />
+                                  </a>
+                                    <div class="card-content">
+                                        <h4 class="card-title">
+                                         <small class="etat-vert-rouge"></small>
+                                         <span class="badge badge-pill" style="background-color: #f16e00;">Autre type de robot</span>
+                                        </h4>
+                                    </div>
+
+                                </div>
+                            </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+              </div>
+
+          </div>
+      </div>
+  </div>
+
+  <!-- robot agricole-->
+
+<div class="modal fade" id="modalagricol" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Enregistrer</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="" [formGroup]="myForm" >
+        <div class="modal-body mx-3">
+          <div class="md-form span_lab">
+            <small>Nom du robot agricole </small>
+            <input type="text" id="form3" class="form-control validate">
+
+          </div>
+
+          <div class="md-form span_lab">
+            <small>Modele du robot agricole </small>
+            <input type="text" id="form3" class="form-control validate">
+
+          </div>
+
+            <div class="md-form span_lab">
+              <small>Fabriquant du robot</small>
+                <input type="text" id="form2" class="form-control validate">
+            </div>
+
+
+
+            <div class="md-form span_lab">
+              <small>Poids du robot</small>
+                <input type="number" id="form2" class="form-control validate">
+            </div>
+
+
+            <div class="md-form span_lab">
+              <small>Autonomie du robo</small>
+                <input type="number" id="form2" class="form-control validate">
+            </div>
+
+
+
+
+          <div class="md-form span_lab">
+            <small>Image</small>
+            <input type="file" (change)="uploadImage($event)" id="form2" class="form-control validate" formControlName="testImage" #testImage>
+          </div>
+
+
+
+          <div class="md-form span_lab">
+            <input type="hidden" id="form3" class="form-control validate">
+            <img [src]="url" class="mt-5" alt="" height="200" style="position: relative; left: 8em;">
+          </div>
+
+        </div>
+      </form>
+
+      <div class="modal-footer d-flex justify-content-center">
+        <button style ="background-color:#f16e00; color:white"class="btn btn-indigo">Enregistrer <i class="fa-regular fa-floppy-disk"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- hostname -->
+
+
+<div class="modal fade" id="hostname" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Veuillez paramettrer l'engin sélectionné</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="p-20"><p> utilisez l'hostname reçu lors de votre inscription pour vous connecter </p>
+      </div>
+      <form action="" [formGroup]="myForm" >
+        <div class="modal-body mx-3">
+          <div class="md-form span_lab">
+            <small>Hostname </small>
+            <input type="text" id="form3" class="form-control validate">
+
+          </div>
+
+
+        </div>
+      </form>
+
+      <div class="modal-footer d-flex justify-content-center">
+        <button style ="background-color:#f16e00; color:white"class="btn btn-indigo">Valider<i class="fa-regular"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- modle drone-->
+
+<div class="modal fade" id="modaldrone" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Enregistrer votre drone </h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="" [formGroup]="myForm" >
+        <div class="modal-body mx-3">
+          <div class="md-form span_lab">
+            <small>Nom du drone</small>
+            <input type="text" id="form3" class="form-control validate">
+          </div>
+
+          <div class="md-form span_lab">
+            <small>Modele du drone</small>
+            <input type="text" id="form3" class="form-control validate">
+          </div>
+
+            <div class="md-form span_lab">
+              <small>Fabriquant du drone</small>
+                <input type="text" id="form2" class="form-control validate">
+            </div>
+
+
+            <div class="md-form span_lab">
+              <small>Poids du drone</small>
+                <input type="number" id="form2" class="form-control validate">
+            </div>
+
+            <div class="md-form span_lab">
+              <small>Autonomie du drone</small>
+                <input type="number" id="form2" class="form-control validate">
+            </div>
+
+
+
+          <div class="md-form span_lab">
+            <small>Image</small>
+            <input type="file" (change)="uploadImage($event)" id="form2" class="form-control validate" formControlName="testImage" #testImage>
+          </div>
+
+
+          <div class="md-form span_lab">
+            <input type="hidden" id="form3" class="form-control validate">
+            <img [src]="url" class="mt-5" alt="" height="200" style="position: relative; left: 8em;">
+          </div>
+
+        </div>
+      </form>
+
+      <div class="modal-footer d-flex justify-content-center">
+        <button style ="background-color:#f16e00; color:white"class="btn btn-indigo">Enregistrer <i class="fa-regular fa-floppy-disk"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- autre type-->
+
+<div class="modal fade" id="modaltype" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Enregistrer un autre type de robot ou drone</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="" [formGroup]="myForm" >
+        <div class="modal-body mx-3">
+
+          <div class="md-form span_lab">
+            <small>Engin</small>
+
+            <select name="" id="" class="form-control ">
+              <option value="">Robot</option>
+              <option value="">Drone</option>
+            </select>
+          </div>
+
+          <div class="md-form span_lab">
+            <small>Type du robot</small>
+            <input type="text" id="form3" class="form-control validate">
+          </div>
+
+          <div class="md-form span_lab">
+            <small>Type du drone</small>
+            <input type="text" id="form3" class="form-control validate">
+          </div>
+
+
+          <div class="md-form span_lab">
+            <small>Modele de l'engin</small>
+            <input type="text" id="form3" class="form-control validate">
+
+          </div>
+
+            <div class="md-form span_lab">
+              <small>Fabriquant de l'engin</small>
+                <input type="text" id="form2" class="form-control validate">
+            </div>
+
+
+
+            <div class="md-form span_lab">
+              <small>Poids de l'engin</small>
+                <input type="number" id="form2" class="form-control validate">
+            </div>
+
+
+          <div class="md-form span_lab">
+            <small>Image</small>
+            <input type="file" (change)="uploadImage($event)" id="form2" class="form-control validate" formControlName="testImage" #testImage>
+
+          </div>
+
+
+          <div class="md-form span_lab">
+            <input type="hidden" id="form3" class="form-control validate">
+            <img [src]="url" class="mt-5" alt="" height="200" style="position: relative; left: 8em;">
+          </div>
+
+        </div>
+      </form>
+
+      <div class="modal-footer d-flex justify-content-center">
+        <button style ="background-color:#f16e00; color:white"class="btn btn-indigo">Enregistrer <i class="fa-regular fa-floppy-disk"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="mt-8 py-5 flex justify-center items-center pagination-button">
+ <div class="pagination">
+    <pagination-controls (pageChange)="onTableDataChange($event)" previousLabel="Précédent"
+    nextLabel="Suivant" class="custom-pagination">
+  </pagination-controls>
+ </div>
+</div>
+
+
+
+
+

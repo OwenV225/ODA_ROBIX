@@ -1,0 +1,17 @@
+button {
+  background-color: #ff7900;
+  border: none;
+}
+
+button:hover {
+  background-color: #000000;
+  border: none;
+}
+.login-img {
+  width: 40%;
+  margin: 0 auto;
+}
+
+.form-outline {
+  text-align: left;
+}
