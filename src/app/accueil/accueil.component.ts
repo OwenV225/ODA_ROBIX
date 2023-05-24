@@ -1,15 +1,26 @@
-import { Component } from '@angular/core';
+import { Component , ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
-import { AppserviceService } from '../services/appservices.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Location } from '@angular/common';
+
+import { ServicesappService } from '../services/servicesapp.service';
+
 
 @Component({
+
+
   selector: 'app-accueil',
   templateUrl: './accueil.component.html',
   styleUrls: ['./accueil.component.css']
 })
 export class AccueilComponent {
 
+  @ViewChild('modalagricol') modal: any;
+
+  messageSuccess = false
+
+ selectedOption : any;
+  affichPagin :any;
   files: any;
   robots: any[] = [];
   drones: any[] = [];
@@ -20,65 +31,261 @@ export class AccueilComponent {
   searchText:  any;
   myList:any;
   i = 10;
+  url:any;
+  displayImg :boolean= false;
+  file: any;
+
+  selectedFile: any;
 
   page : number = 1;
   count : number = 0;
   tableSize : number = 8;
   tableSizes : any = [5, 10, 15, 20];
-  myForm: any;
-
-  constructor(private router:Router, private fb:FormBuilder,  private appservice: AppserviceService){
+  myForm!:FormGroup;
+  myFormDrone!:FormGroup;
+  defaultValueHostname: string = 'local-tello';
+  defaultValueUserId: any;
+  defaultValueTypeEngin: string = 'robot agriculture';
+  condition: boolean = true;
+  user:any;
+  constructor(private router:Router, private fb:FormBuilder, private appservice: ServicesappService, private location: Location){
     this.getRobot(),
-    this.getDrone()
+    //this.getDrone(),
+    this.createForm(),
+    this.createFormDrone()
   };
   ngOnInit() {
     this.getRobot(),
-    this.getDrone()
+    this.getDrone(),
+    this.createForm(),
+    this.createFormDrone(),
+    this.getUser()
   }
 
   get f(){
     return this.myForm.controls;
   }
+  get g(){
+    return this.myFormDrone.controls;
+  }
+  getUser(){
+    this.user = this.appservice.getItem('myData');
+    //console.log(this.user.user.nom)
+    this.defaultValueUserId = this.user.user._id
+  }
   createForm(){
     this.myForm = this.fb.group({
-      Hostname:['',Validators.required],
-      Modele: ['',Validators.required],
+      hostname:['',Validators.required],
+      model: ['',Validators.required],
+
+      nom:['',Validators.required],
+      fabriquant: ['',Validators.required],
+
+      poids:['',Validators.required],
+      autonomie: ['',Validators.required],
+
+      typeEngin: ['',Validators.required],
+      //testImage: ['',Validators.required],
+      userId: ['', Validators.required],
+
+      testImage: ['',Validators.required],
+    })
+  }
+
+  createFormDrone(){
+    this.myFormDrone = this.fb.group({
+      hostname:['',Validators.required],
+      model: ['',Validators.required],
+
+      nom:['',Validators.required],
+      fabriquant: ['',Validators.required],
+
+      poids:['',Validators.required],
+      autonomie: ['',Validators.required],
+
+      typeEngin: ['',Validators.required],
       //testImage: ['',Validators.required],
       userId: ['',Validators.required],
     })
   }
+
+  reloadPage() {
+    this.location.forward;
+  }
+
   getRobot(){
-    this.appservice.getUserRobot().subscribe(
+    this.user = this.appservice.getItem('myData');
+    console.log("robot: "+this.user.user._id)
+    this.appservice.getUserRobot(this.user.user._id).subscribe(
       (res)=>{
         this.robots = res;
-        console.log(this.robots);
+        console.log("robot: "+this.robots);
       }
     )
   }
 
-  url="";
-  uploadImage(e:any){
-    if (e.target.files) {
-      this.files = e.target.files[0];
-      var reader = new FileReader();
-      reader.readAsDataURL(e.target.files[0]);
-      reader.onload = (event:any)=>{
-        this.url = event.target.result;
-      }
-      console.log(this.files);
 
-    }
+  getDrone(){
+    this.user = this.appservice.getItem('myData');
+    this.appservice.getUserDrone(this.user.user._id).subscribe(
+      (res)=>{
+        this.drones = res;
+        console.log(this.drones);
+      }
+    )
+  }
+
+
+  // uploadImage(e:any){
+  //   if (e.target.files) {
+  //     this.files = e.target.files[0];
+  //     var reader = new FileReader();
+  //     reader.readAsDataURL(e.target.files[0]);
+  //     reader.onload = (event:any)=>{
+  //       this.url = event.target.result;
+  //     }
+  //     console.log(this.files);
+
+  //   }
   //    this.myForm.patchValue({
   //     LienImage:this.files
   //   });
   //   this.myForm.get('testImage')?.updateValueAndValidity();
+  //}
+
+  onFileSelected(event: any) {
+
+    if (event.target.files) {
+      this.files = event.target.files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(event.target.files[0]);
+      reader.onload = (event:any)=>{
+        this.url = event.target.result;
+        this.displayImg = true;
+      }
+      console.log(this.files);
+
+    }
+
+    this.selectedFile = event.target.files[0];
+    console.log(this.selectedFile)
+  }
+
+  submitData() {
+
+    /* let formdata : FormData = new FormData();
+    formdata.set('nom', this.myForm.value.nom)
+    formdata.set('model', this.myForm.value.model)
+    formdata.set('fabriquant', this.myForm.value.fabriquant)
+    formdata.set('poids', this.myForm.value.poids)
+    formdata.set('autonomie', this.myForm.value.autonomie)
+    //formdata.set('testImage', this.myForm.value.testImage)
+    formdata.set('hostname', this.myForm.value.hostname)
+    formdata.set('userId', this.myForm.value.userId)
+    formdata.set('typeEngin', this.myForm.value.typeEngin)
+
+
+    formdata.set('testImage', this.selectedFile);
+
+    //console.log(formdata)
+
+    this.appservice.addRobot(formdata).subscribe((res) => {
+     console.log()
+    })
+    */
+
+     const formData = new FormData();
+    formData.append('nom', this.myForm.value.nom);
+    formData.append('model', this.myForm.value.model);
+    formData.append('fabriquant', this.myForm.value.fabriquant);
+    formData.append('poids', this.myForm.value.poids);
+    formData.append('autonomie', this.myForm.value.autonomie);
+    formData.append('hostname', this.myForm.value.hostname);
+    formData.append('userId', this.myForm.value.userId);
+    formData.append('typeEngin', this.myForm.value.typeEngin);
+    formData.append('testImage', this.selectedFile);
+
+    this.appservice.addRobot(formData).subscribe(
+      (res) => {
+
+
+        console.log(res);
+
+
+        window.location.reload();
+
+
+// Fermez le modal en supprimant la classe "show" et en ajoutant la classe "hide"
+
+
+
+        // Réinitialiser le formulaire après l'enregistrement réussi
+        this.myForm.reset();
+
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+}
+
+
+  //addRobot(){
+    //alert("ok")
+    //console.log("valeur:" + this.myForm.value.nom +" "+this.myForm.value.hostname);
+    //const formData = new FormData();
+
+    //const formData = new FormData();
+    //formData.append('testImage', this.selectedFile, this.selectedFile)
+     //this.appservice.addRobot(this.myForm.value.hostname,this.myForm.value.nom,this.myForm.value.model,this.myForm.value.fabriquant,this.myForm.value.poids,this.myForm.value.autonomie,this.myForm.value.userId,this.myForm.value.typeEngin, this.myForm.value.testImage).subscribe(
+      //(res)=>{
+        //Swal.fire('Succes!', 'Votre drone a bien été enreistré', 'success');
+
+        // const link=['accueil'];
+        // this.router.navigate(link);
+        //console.log('ok......')
+      //}
+    //)
+
+  // Ajouter les champs du formulaire à FormData
+  // formData.append('nom', this.myForm.value.nom);
+  // formData.append('hostname', this.myForm.value.hostname);
+  // formData.append('model', this.myForm.value.model);
+  // // Ajouter l'image (remplacez 'file' par le nom approprié)
+  // formData.append('testImage', this.selectedFile);
+
+  // // Appeler la méthode pour envoyer les données du formulaire
+  //   this.submitForm(formData);
+
+  //}
+
+
+addDrone(){
+  const formData = new FormData();
+  formData.append('nom', this.myFormDrone.value.nom);
+  formData.append('model', this.myFormDrone.value.model);
+  formData.append('fabriquant', this.myFormDrone.value.fabriquant);
+  formData.append('poids', this.myFormDrone.value.poids);
+  formData.append('autonomie', this.myFormDrone.value.autonomie);
+  formData.append('hostname', this.myFormDrone.value.hostname);
+  formData.append('userId', this.myFormDrone.value.userId);
+  formData.append('typeEngin', this.myFormDrone.value.typeEngin);
+  formData.append('testImage', this.selectedFile);
+
+    this.appservice.addDrone(formData).subscribe(
+      (res)=>{
+
+        window.location.reload();
+        this.myFormDrone.reset();
+        // const link=['accueil'];
+        // this.router.navigate(link);
+        //console.log('ok......')
+      }
+    )
   }
 
 
-
-
-
-  donR = [
+donR = [
     {libele : "robot 1", type : "agro", img:"assets/images/rbt1.png"},
     {libele : "robot 2", type : "planteur", img:"assets/images/rb2.png"},
     {libele : "robot 3", type : "semeur", img:"assets/images/robo1.png"},
@@ -104,8 +311,7 @@ export class AccueilComponent {
     {libele : "robot 23", type : "deserbeur", img:"assets/images/robot1.png"},
     {libele : "robot 24", type : "vionneur", img:"assets/images/robot5.png"},
   ]
-
-  donD = [
+donD = [
     {libele : "drone 1", type : "aéroDrone", img:"assets/images/drone8.png"},
     {libele : "drone 2", type : "Nimbus", img:"assets/images/drone1.png"},
     {libele : "drone 3", type : "AeroX", img:"assets/images/drone2.png"},
@@ -132,14 +338,7 @@ export class AccueilComponent {
     {libele : "drone 24", type : "skyvoyager", img:"assets/images/drone1.png"},
   ]
 
-  getDrone(){
-    this.appservice.getUserDrone().subscribe(
-      (res)=>{
-        this.drones = res;
-        console.log(this.drones);
-      }
-    )
-  }
+
   selectionEngin(){
     const link=['selectionrobo'];
         this.router.navigate(link);
@@ -161,5 +360,18 @@ export class AccueilComponent {
     this.getRobot(),
     this.getDrone()
    }
+
+   onSelectionChange(event: any) {
+    this.selectedOption = event.target.value;
+  }
+  onLinkClick(value: string) {
+  this.affichPagin = value;
+  // Autres actions à effectuer avec la valeur cliquée
+  // ...
+  }
+  nopT(){
+    this.router.navigateByUrl('/dash')
+
+ }
 
 }

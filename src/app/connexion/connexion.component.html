@@ -28,7 +28,7 @@
           "
         >
           <div class="card-body p-5 shadow-5 text-center">
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
               <!-- 2 column grid layout with text inputs for the first and last names -->
 
               <!-- Email input -->
@@ -36,7 +36,7 @@
                 <label class="form-label" for="form3Example3"
                   >Numéro de téléphone :</label
                 >
-                <input type="email" id="form3Example3" class="form-control" formControlName="username"/>
+                <input type="email" id="form3Example3" class="form-control" formControlName="telephone"/>
               </div>
 
               <!-- Password input -->

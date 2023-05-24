@@ -1,239 +1,420 @@
 <app-menu></app-menu>
 
+<div class="pcoded-content">
+  <!-- [ breadcrumb ] start -->
+  <div>
+    <div>
+      <div class="divlink_search">
+        <div class="link_">
+          <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="margin-top: 80px;">
+            <li class="nav-item">
+                <a class="nav-link active" (click)="onLinkClick('valeur1')"  id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" style="font-weight: bold;">Cas d'utilisation agriculture</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" (click)="onLinkClick('valeur2')"  id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false" style="font-weight: bold;">Cas d'utilisation de livraison</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" (click)="onLinkClick('valeur3')" id="pills-device-tab" data-toggle="pill" href="#pills-device" role="tab" aria-controls="pills-device" aria-selected="false" style="font-weight: bold;">Enregistrer un device</a>
+          </li>
+          </ul>
+        </div>
 
-  <div class="pcoded-content">
-      <!-- [ breadcrumb ] start -->
-      <div >
-          <div>
-             <div class="divlink_search">
-              <div class="link_">
-                <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="margin-top: 80px;">
-                  <li class="nav-item">
-                      <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true" style="font-weight: bold;">Cas d'utilisation agriculture</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false" style="font-weight: bold;">Cas d'utilisation de livraison</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" id="pills-device-tab" data-toggle="pill" href="#pills-device" role="tab" aria-controls="pills-device" aria-selected="false" style="font-weight: bold;">Enregistrer un device</a>
-                </li>
-                </ul>
-              </div>
+        <div class="search-hero">
+          <input
+            class="form-control"
+            type="text"
+            name="search"
+            [(ngModel)]="searchText"
+            autocomplete="off"
+            placeholder="Recherche..."
+          />
+        </div>
+      </div>
 
-              <div class="search-hero">
-                <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="Recherche...">
-              </div>
-             </div>
-
-              <div class="tab-content" id="pills-tabContent">
-                  <div class="mt-5 tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                      <section class="wrapper">
-                          <div class="container-fostrap">
-                              <div class="content">
-                                  <div class="container">
-                                      <div class="row">
-                                        <div *ngFor="let robot of donR | filter:searchText | paginate: { itemsPerPage: tableSize,currentPage: page, totalItems:count}; let i = index" class="col-xs-12 col-lg-3">
-                                          <div class="card">
-
-                                              <a class="img-card" data-toggle="modal" data-target="#hostname">
-                                                  <img src="{{robot.img}}" />
-                                            </a>
-                                            <small class="cart-status" style="position: absolute; top:5px;  right:2%; "></small>
-                                              <div class="card-content">
-                                                 <div class="row">
-                                                  <div class="col-md-6">
-                                                    <h4 class="card-title">
-                                                      {{robot.libele}}
-                                                   </h4>
-                                                   <p class="">
-                                                     {{robot.type}}
-                                                   </p>
-                                                  </div>
-
-                                                  <div class="col-md-6 p-25">13/09/2023</div>
-                                                 </div>
-                                              </div>
-
-
-                                          </div>
-                                      </div>
-                                      </div>
-                                  </div>
+      <div class="tab-content" id="pills-tabContent">
+        <div
+          class="mt-5 tab-pane fade show active"
+          id="pills-home"
+          role="tabpanel"
+          aria-labelledby="pills-home-tab"
+        >
+          <section class="wrapper">
+            <div class="container-fostrap">
+              <div class="content">
+                <div class="container">
+                  <div class="row">
+                    <div *ngIf="robots.length === 0">
+                      Aucun robot n'est disponible.
+                    </div>
+                    <div *ngFor="let robot of robots | filter:searchText | paginate: { itemsPerPage: tableSize,currentPage: page, totalItems:count}; let i = index" class="col-xs-12 col-lg-3">
+                      <div class="card">
+                          <a class="img-card" data-toggle="modal" data-target="#hostname">
+                            <img
+                            class="rounded-lg-3"
+                            src="data:image/png;base64,{{ robot.image }}"
+                          />
+                        </a>
+                        <small class="cart-status" style="position: absolute; top:5px;  right:2%; "></small>
+                          <div class="card-content">
+                             <div class="row">
+                              <div class="col-md-6">
+                                <h4 class="card-title">
+                                  {{robot.nom}}
+                               </h4>
+                               <p class="">
+                                 {{robot.model}}
+                               </p>
                               </div>
+
+                              <div class="col-md-6 p-25">13/09/2023</div>
+                             </div>
                           </div>
-                      </section>
+                      </div>
+                    </div>
                   </div>
-                  <div class="mt-5 tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                      <section class="wrapper">
-                          <div class="container-fostrap">
-                              <div>
-                              </div>
-                              <div class="content">
-                                <div class="container">
-                                  <div class="row">
-                                    <div *ngFor="let robot of donD | filter:searchText | paginate: { itemsPerPage: tableSize,currentPage: page, totalItems:count}; let i = index" class="col-xs-12 col-lg-3">
-                                      <div class="card">
-                                          <a class="img-card" (click)="selectionEngin()">
-                                              <img src="{{robot.img}}" />
-                                        </a>
-                                        <small class="cart-status" style="position: absolute; top:5px;  right:2%;"></small>
-
-                                        <div class="row">
-                                          <div class="col-md-6">
-                                            <div class="card-content">
-                                              <h4 class="card-title">
-                                                <a href=""> {{robot.libele}}
-                                                </a>
-                                              </h4>
-                                              <p class="">
-                                                {{robot.type}}
-                                              </p>
-                                          </div>
-
-                                          </div>
-                                          <div class="col-md-6 p-40">13/09/2023</div>
-                                        </div>
-
-                                      </div>
-                                  </div>
-                                  </div>
-                              </div>
-                              </div>
-                          </div>
-                      </section>
-                  </div>
-                  <div class="mt-5 tab-pane fade" id="pills-device" role="tabpanel" aria-labelledby="pills-device-tab">
-                    <section class="wrapper">
-                        <div class="container-fostrap">
-                            <div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div
+          class="mt-5 tab-pane fade"
+          id="pills-profile"
+          role="tabpanel"
+          aria-labelledby="pills-profile-tab"
+        >
+          <section class="wrapper">
+            <div class="container-fostrap">
+              <div></div>
+              <div class="content">
+                <div class="container">
+                  <div class="row">
+                    <div *ngIf="drones.length === 0">
+                      Aucun drone n'est disponible.
+                    </div>
+                    <div *ngFor="
+                        let drone of drones
+                          | filter : searchText
+                          | paginate
+                            : {
+                                itemsPerPage: tableSize,
+                                currentPage: page,
+                                totalItems: count
+                              };
+                        let i = index
+                      "
+                      class="col-xs-12 col-lg-3"
+                      >
+                      <div class="card">
+                        <a class="img-card" data-toggle="modal" data-target="#hostname">
+                          <img
+                          class="rounded-lg-3"
+                          src="data:image/png;base64,{{ drone.image }}"
+                        />
+                      </a>
+                      <small class="cart-status" style="position: absolute; top:5px;  right:2%; "></small>
+                        <div class="card-content">
+                           <div class="row">
+                            <div class="col-md-6">
+                              <h4 class="card-title">
+                                {{drone.nom}}
+                             </h4>
+                             <p class="">
+                               {{drone.model}}
+                             </p>
                             </div>
-                            <div class="content">
-                              <div class="container">
-                                <div class="row" style="position:relative; left: 15em">
-                                  <div class="col-xs-12 col-lg-3 ">
-                                    <div class="card">
-                                        <a class="img-card" data-toggle="modal" data-target="#modalagricol">
-                                            <img src="/assets/images/robotrecolte.jpg" />
-                                      </a>
-                                        <div class="card-content">
-                                            <h4 class="card-title">
-                                              <span class="badge badge-pill" style="background-color: #f16e00;">Robot Agriculteur</span>
-                                            </h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-12 col-lg-3">
-                                  <div class="card">
-                                      <a class="img-card" data-toggle="modal" data-target="#modaldrone">
-                                          <img src=" /assets/images/dronelivreur.jpg" />
-                                      </a>
-                                      <div class="card-content">
-                                          <h4 class="card-title">
-                                            <span class="badge badge-pill" style="background-color: #f16e00;">Drone livreur</span>
-                                          </h4>
-                                      </div>
 
-                                  </div>
-                              </div>
-                              <div class="col-xs-12 col-lg-3">
-                                <div class="card">
-                                  <a class="img-card" data-toggle="modal" data-target="#modaltype">
-                                        <img src="/assets/images/autretype.jpg" />
-                                  </a>
-                                    <div class="card-content">
-                                        <h4 class="card-title">
-                                         <small class="etat-vert-rouge"></small>
-                                         <span class="badge badge-pill" style="background-color: #f16e00;">Autre type de robot</span>
-                                        </h4>
-                                    </div>
-
-                                </div>
-                            </div>
-                                </div>
-                            </div>
-                            </div>
+                            <div class="col-md-6 p-25">13/09/2023</div>
+                           </div>
                         </div>
-                    </section>
+                    </div>
+                  </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-          </div>
-      </div>
-  </div>
-
-  <!-- robot agricole-->
-
-<div class="modal fade" id="modalagricol" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Enregistrer</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form action="" [formGroup]="myForm" >
-        <div class="modal-body mx-3">
-          <div class="md-form span_lab">
-            <small>Nom du robot agricole </small>
-            <input type="text" id="form3" class="form-control validate">
-
-          </div>
-
-          <div class="md-form span_lab">
-            <small>Modele du robot agricole </small>
-            <input type="text" id="form3" class="form-control validate">
-
-          </div>
-
-            <div class="md-form span_lab">
-              <small>Fabriquant du robot</small>
-                <input type="text" id="form2" class="form-control validate">
-            </div>
-
-
-
-            <div class="md-form span_lab">
-              <small>Poids du robot</small>
-                <input type="number" id="form2" class="form-control validate">
-            </div>
-
-
-            <div class="md-form span_lab">
-              <small>Autonomie du robo</small>
-                <input type="number" id="form2" class="form-control validate">
-            </div>
-
-
-
-
-          <div class="md-form span_lab">
-            <small>Image</small>
-            <input type="file" (change)="uploadImage($event)" id="form2" class="form-control validate" formControlName="testImage" #testImage>
-          </div>
-
-
-
-          <div class="md-form span_lab">
-            <input type="hidden" id="form3" class="form-control validate">
-            <img [src]="url" class="mt-5" alt="" height="200" style="position: relative; left: 8em;">
-          </div>
-
+          </section>
         </div>
-      </form>
+        <div
+          class="mt-5 tab-pane fade"
+          id="pills-device"
+          role="tabpanel"
+          aria-labelledby="pills-device-tab"
+        >
+          <section class="wrapper">
+            <div class="container-fostrap">
+              <div></div>
+              <div class="content">
+                <div class="container">
+                  <div class="row" style="position: relative; left: 15em">
+                    <div class="col-xs-12 col-lg-3">
+                      <div class="card">
+                        <a
+                          class="img-card"
+                          data-toggle="modal"
+                          data-target="#modalagricol"
+                        >
+                          <img src="/assets/images/robotrecolte.jpg" />
+                        </a>
+                        <div class="card-content">
+                          <h4 class="card-title">
+                            <span
+                              class="badge badge-pill"
+                              style="background-color: #f16e00"
+                              >Robot Agriculteur</span
+                            >
+                          </h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-lg-3">
+                      <div class="card">
+                        <a
+                          class="img-card"
+                          data-toggle="modal"
+                          data-target="#modaldrone"
+                        >
+                          <img src=" /assets/images/dronelivreur.jpg" />
+                        </a>
+                        <div class="card-content">
+                          <h4 class="card-title">
+                            <span
+                              class="badge badge-pill"
+                              style="background-color: #f16e00"
+                              >Drone livreur</span
+                            >
+                          </h4>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-lg-3">
+                      <div class="card">
+                        <a
+                          class="img-card"
+                          data-toggle="modal"
+                          data-target="#modaltype"
+                        >
+                          <img src="/assets/images/autretype.jpg" />
+                        </a>
+                        <div class="card-content">
+                          <h4 class="card-title">
+                            <small class="etat-vert-rouge"></small>
+                            <span class="badge badge-pill"style="background-color: #f16e00">Autre type de robot</span>
+                          </h4>
+                        </div>
 
-      <div class="modal-footer d-flex justify-content-center">
-        <button style ="background-color:#f16e00; color:white"class="btn btn-indigo">Enregistrer <i class="fa-regular fa-floppy-disk"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- hostname -->
+<!-- robot agricole-->
 
+<div
+  class="modal fade"
+  id="modalagricol"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+  messageSuccess
+  #modalagricol
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">
+          Enregistrer votre robot agricole
+        </h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="myForm">
+        <div class="modal-body mx-3">
+          <div class="md-form span_lab">
+            <small>Nom du robot agricole </small>
+            <input
+              type="text"
+              id="form3"
+              class="form-control validate"
+              formControlName="nom"
+              #nom
+            />
+            <div
+              *ngIf="f['nom'].errors && f['nom'].touched && f['nom'].invalid"
+            >
+              <div class="text-danger" *ngIf="f['nom'].errors['required']">
+                Le nom est requis
+              </div>
+            </div>
+          </div>
 
-<div class="modal fade" id="hostname" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+          <div class="md-form span_lab">
+            <small>Modele du robot agricole </small>
+            <input
+              type="text"
+              id="form3"
+              class="form-control validate"
+              formControlName="model"
+              #model
+            />
+            <div
+              *ngIf="
+                f['model'].errors && f['model'].touched && f['model'].invalid
+              "
+            >
+              <div class="text-danger" *ngIf="f['model'].errors['required']">
+                Le model est requis
+              </div>
+            </div>
+          </div>
+
+          <div class="md-form span_lab">
+            <small>Fabriquant du robot</small>
+            <input
+              type="text"
+              id="form2"
+              class="form-control validate"
+              formControlName="fabriquant"
+              #fabriquant
+            />
+            <div
+              *ngIf="
+                f['fabriquant'].errors &&
+                f['fabriquant'].touched &&
+                f['fabriquant'].invalid
+              "
+            >
+              <div
+                class="text-danger"
+                *ngIf="f['fabriquant'].errors['required']"
+              >
+                Le fabriquant est requis
+              </div>
+            </div>
+          </div>
+
+          <div class="md-form span_lab">
+            <small>Poids du robot</small>
+            <input
+              type="number"
+              id="form2"
+              class="form-control validate"
+              formControlName="poids"
+              #poids
+            />
+            <div
+              *ngIf="
+                f['poids'].errors && f['poids'].touched && f['poids'].invalid
+              "
+            >
+              <div class="text-danger" *ngIf="f['poids'].errors['required']">
+                Le poids est requis
+              </div>
+            </div>
+          </div>
+
+          <div class="md-form span_lab">
+            <small>Autonomie du robo</small>
+            <input
+              type="number"
+              id="form2"
+              class="form-control validate"
+              formControlName="autonomie"
+              #autonomie
+            />
+            <div
+              *ngIf="
+                f['autonomie'].errors &&
+                f['autonomie'].touched &&
+                f['autonomie'].invalid
+              "
+            >
+              <div
+                class="text-danger"
+                *ngIf="f['autonomie'].errors['required']"
+              >
+                L'autonomie est requis
+              </div>
+            </div>
+          </div>
+
+          <div class="md-form span_lab">
+            <small>Image</small>
+            <input
+              type="file"
+              (change)="onFileSelected($event)"
+              id="form2"
+              class="form-control validate"
+              formControlName="testImage"
+              #testImage
+            />
+            <img [src]="url" class="mt-5" alt="" height="200" style="position: relative; left: 1em;">
+          </div>
+
+          <div class="md-form span_lab">
+            <input
+              type="hidden"
+              id="form3"
+              [(ngModel)]="defaultValueHostname"
+              class="form-control validate"
+              formControlName="hostname"
+              #hostname
+            />
+          </div>
+          <div class="md-form span_lab">
+            <input
+              type="hidden"
+              id="form3"
+              [(ngModel)]="defaultValueUserId"
+              class="form-control validate"
+              formControlName="userId"
+              #userId
+            />
+          </div>
+
+          <div class="md-form span_lab">
+            <input
+              type="hidden"
+              id="form3"
+              [(ngModel)]="defaultValueTypeEngin"
+              class="form-control validate"
+              formControlName="typeEngin"
+              #typeEngin
+            />
+          </div>
+        </div>
+      </form>
+
+      <div class="modal-footer d-flex justify-content-center">
+        <button
+          style="background-color: #f16e00; color: white"
+          class="btn btn-indigo"
+          (click)="submitData()"
+        >
+          Enregistrer <i class="fa-regular fa-floppy-disk"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal cldd" id="hostname"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -258,72 +439,204 @@
       </form>
 
       <div class="modal-footer d-flex justify-content-center">
-        <button style ="background-color:#f16e00; color:white"class="btn btn-indigo">Valider<i class="fa-regular"></i></button>
+        <button style ="background-color:#f16e00; color:white"class="btn btn-indigo" (click)="nopT()">Valider<i class="fa-regular"></i></button>
       </div>
     </div>
   </div>
 </div>
 
 
-
 <!-- modle drone-->
 
-<div class="modal fade" id="modaldrone" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
+<div
+  class="modal fade"
+  id="modaldrone"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Enregistrer votre drone </h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h4 class="modal-title w-100 font-weight-bold">
+          Enregistrer votre drone
+        </h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="" [formGroup]="myForm" >
+      <form [formGroup]="myFormDrone">
         <div class="modal-body mx-3">
           <div class="md-form span_lab">
-            <small>Nom du drone</small>
-            <input type="text" id="form3" class="form-control validate">
+            <small>Nom du drone </small>
+            <input
+              type="text"
+              id="form3"
+              class="form-control validate"
+              formControlName="nom"
+              #nom
+            />
+            <div
+              *ngIf="g['nom'].errors && g['nom'].touched && g['nom'].invalid"
+            >
+              <div class="text-danger" *ngIf="g['nom'].errors['required']">
+                Le nom est requis
+              </div>
+            </div>
           </div>
 
           <div class="md-form span_lab">
-            <small>Modele du drone</small>
-            <input type="text" id="form3" class="form-control validate">
+            <small>Modele du drone </small>
+            <input
+              type="text"
+              id="form3"
+              class="form-control validate"
+              formControlName="model"
+              #model
+            />
+            <div
+              *ngIf="
+                g['model'].errors && g['model'].touched && g['model'].invalid
+              "
+            >
+              <div class="text-danger" *ngIf="g['model'].errors['required']">
+                Le model est requis
+              </div>
+            </div>
           </div>
 
-            <div class="md-form span_lab">
-              <small>Fabriquant du drone</small>
-                <input type="text" id="form2" class="form-control validate">
+          <div class="md-form span_lab">
+            <small>Fabriquant du drone</small>
+            <input
+              type="text"
+              id="form2"
+              class="form-control validate"
+              formControlName="fabriquant"
+              #fabriquant
+            />
+            <div
+              *ngIf="
+                g['fabriquant'].errors &&
+                g['fabriquant'].touched &&
+                g['fabriquant'].invalid
+              "
+            >
+              <div
+                class="text-danger"
+                *ngIf="g['fabriquant'].errors['required']"
+              >
+                Le fabriquant est requis
+              </div>
             </div>
+          </div>
 
-
-            <div class="md-form span_lab">
-              <small>Poids du drone</small>
-                <input type="number" id="form2" class="form-control validate">
+          <div class="md-form span_lab">
+            <small>Poids du drone</small>
+            <input
+              type="number"
+              id="form2"
+              class="form-control validate"
+              formControlName="poids"
+              #poids
+            />
+            <div
+              *ngIf="
+                g['poids'].errors && g['poids'].touched && g['poids'].invalid
+              "
+            >
+              <div class="text-danger" *ngIf="g['poids'].errors['required']">
+                Le poids est requis
+              </div>
             </div>
+          </div>
 
-            <div class="md-form span_lab">
-              <small>Autonomie du drone</small>
-                <input type="number" id="form2" class="form-control validate">
+          <div class="md-form span_lab">
+            <small>Autonomie du drone</small>
+            <input
+              type="number"
+              id="form2"
+              class="form-control validate"
+              formControlName="autonomie"
+              #autonomie
+            />
+            <div
+              *ngIf="
+                g['autonomie'].errors &&
+                g['autonomie'].touched &&
+                g['autonomie'].invalid
+              "
+            >
+              <div
+                class="text-danger"
+                *ngIf="g['autonomie'].errors['required']"
+              >
+                L'autonomie est requis
+              </div>
             </div>
-
-
+          </div>
 
           <div class="md-form span_lab">
             <small>Image</small>
-            <input type="file" (change)="uploadImage($event)" id="form2" class="form-control validate" formControlName="testImage" #testImage>
+            <input
+              type="file"
+              (change)="onFileSelected($event)"
+              id="form2"
+              class="form-control validate"
+              formControlName="testImage"
+              #testImage
+            />
+            <img  [src]="url" class="mt-5" alt="" height="200" style="position: relative; left: 1em;">
           </div>
-
 
           <div class="md-form span_lab">
-            <input type="hidden" id="form3" class="form-control validate">
-            <img [src]="url" class="mt-5" alt="" height="200" style="position: relative; left: 8em;">
+            <input
+              type="hidden"
+              id="form3"
+              [(ngModel)]="defaultValueHostname"
+              class="form-control validate"
+              formControlName="hostname"
+              #hostname
+            />
           </div>
 
+          <div class="md-form span_lab">
+            <input
+              type="hidden"
+              id="form3"
+              [(ngModel)]="defaultValueUserId"
+              class="form-control validate"
+              formControlName="userId"
+              #userId
+            />
+          </div>
+
+          <div class="md-form span_lab">
+            <input
+              type="hidden"
+              id="form3"
+              [(ngModel)]="defaultValueTypeEngin"
+              class="form-control validate"
+              formControlName="typeEngin"
+              #typeEngin
+            />
+          </div>
         </div>
       </form>
 
       <div class="modal-footer d-flex justify-content-center">
-        <button style ="background-color:#f16e00; color:white"class="btn btn-indigo">Enregistrer <i class="fa-regular fa-floppy-disk"></i></button>
+        <button
+          style="background-color: #f16e00; color: white"
+          class="btn btn-indigo"
+          (click)="addDrone()"
+        >
+          Enregistrer <i class="fa-regular fa-floppy-disk"></i>
+        </button>
       </div>
     </div>
   </div>
@@ -331,91 +644,147 @@
 
 <!-- autre type-->
 
-<div class="modal fade" id="modaltype" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
+<div
+  class="modal fade"
+  id="modaltype"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Enregistrer un autre type de robot ou drone</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h4 class="modal-title w-100 font-weight-bold">
+          Enregistrer un autre type de robot ou drone
+        </h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="" [formGroup]="myForm" >
-        <div class="modal-body mx-3">
-
-          <div class="md-form span_lab">
-            <small>Engin</small>
-
-            <select name="" id="" class="form-control ">
-              <option value="">Robot</option>
-              <option value="">Drone</option>
-            </select>
-          </div>
-
-          <div class="md-form span_lab">
-            <small>Type du robot</small>
-            <input type="text" id="form3" class="form-control validate">
-          </div>
-
-          <div class="md-form span_lab">
-            <small>Type du drone</small>
-            <input type="text" id="form3" class="form-control validate">
-          </div>
 
 
-          <div class="md-form span_lab">
-            <small>Modele de l'engin</small>
-            <input type="text" id="form3" class="form-control validate">
+<form action="" [formGroup]="myForm" >
+  <div class="modal-body mx-3">
 
-          </div>
-
-            <div class="md-form span_lab">
-              <small>Fabriquant de l'engin</small>
-                <input type="text" id="form2" class="form-control validate">
-            </div>
-
-
-
-            <div class="md-form span_lab">
-              <small>Poids de l'engin</small>
-                <input type="number" id="form2" class="form-control validate">
-            </div>
-
-
-          <div class="md-form span_lab">
-            <small>Image</small>
-            <input type="file" (change)="uploadImage($event)" id="form2" class="form-control validate" formControlName="testImage" #testImage>
-
-          </div>
-
-
-          <div class="md-form span_lab">
-            <input type="hidden" id="form3" class="form-control validate">
-            <img [src]="url" class="mt-5" alt="" height="200" style="position: relative; left: 8em;">
-          </div>
-
+    <div class="md-form span_lab">
+      <small>Engin</small>
+<!--pour l'affichage des données en fonction de l'engin choisi-->
+      <select name="" id="" class="form-control" (change)="onSelectionChange($event)">
+        <option value="option1">Selectionner un engin</option>
+        <option value="option2">Robot</option>
+        <option value="option3">Drone</option>
+      </select>
+    </div>
+    <div *ngIf="selectedOption === 'option2'">
+      <div class="md-form span_lab">
+        <small>Type du robot</small>
+        <select name="" id="" class="form-control">
+          <option value="option1">Selectionner votre type de robot</option>
+          <option value="option2">Robot industriel</option>
+          <option value="option3">Robot domestique</option>
+          <option value="option4">Robot militaire</option>
+          <option value="option5">Robot éducatif</option>
+        </select>
+      </div>
+      <div class="md-form span_lab">
+        <small>Modele du robot</small>
+        <input type="text" id="form3" class="form-control validate">
+      </div>
+        <div class="md-form span_lab">
+          <small>Fabriquant du robot</small>
+            <input type="text" id="form2" class="form-control validate">
         </div>
-      </form>
-
+        <div class="md-form span_lab">
+          <small>Poids du robot</small>
+            <input type="number" id="form2" class="form-control validate">
+        </div>
+      <div class="md-form span_lab">
+        <small>Image</small>
+        <input
+        type="file"
+        (change)="onFileSelected($event)"
+        id="form2"
+        class="form-control validate"
+        formControlName="testImage"
+        #testImage
+      />
+      <img [src]="url" class="mt-5" alt="" height="200" style="position: relative; left: 1em;">      </div>
+      <div class="md-form span_lab">
+        <input type="hidden" id="form3" class="form-control validate">
+        <img [src]="url" class="mt-5" alt="" height="200" style="position: relative; left: 8em;">
+      </div>
       <div class="modal-footer d-flex justify-content-center">
         <button style ="background-color:#f16e00; color:white"class="btn btn-indigo">Enregistrer <i class="fa-regular fa-floppy-disk"></i></button>
+        <button style ="background-color:#f16e00; color:white"class="btn btn-indigo">Retour <i class="fa-regular fa-floppy-disk"></i></button>
       </div>
+    </div>
+    <div *ngIf="selectedOption === 'option3'">
+      <div class="md-form span_lab">
+        <small>Type du drone</small>
+        <select name="" id="" class="form-control">
+          <option value="option1">Selectionner votre type de drone</option>
+          <option value="option2">Drone photographe</option>
+          <option value="option3">Drone agricole</option>
+          <option value="option4">Drone militaire</option>
+          <option value="option5">Drone scientifique</option>
+        </select>
+      </div>
+      <div class="md-form span_lab">
+        <small>Modele du drone</small>
+        <input type="text" id="form3" class="form-control validate">
+
+      </div>
+        <div class="md-form span_lab">
+          <small>Fabriquant du drone</small>
+            <input type="text" id="form2" class="form-control validate">
+        </div>
+        <div class="md-form span_lab">
+          <small>Poids du drone</small>
+            <input type="number" id="form2" class="form-control validate">
+        </div>
+
+      <div class="md-form span_lab">
+        <small>Image</small>
+        <input
+        type="file"
+        (change)="onFileSelected($event)"
+        id="form2"
+        class="form-control validate"
+        formControlName="testImage"
+        #testImage
+      />
+      <img [src]="url" class="mt-5" alt="" height="200" style="position: relative; left: 1em;">      </div>
+
+      <div class="md-form span_lab">
+        <input type="hidden" id="form3" class="form-control
+validate">
+        <img [src]="url" class="mt-5" alt="" height="200" style="position: relative; left: 8em;">
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button style ="background-color:#f16e00; color:white"class="btn btn-indigo">Enregistrer <i class="fa-regular fa-floppy-disk"></i></button>
+        <button style ="background-color:#f16e00; color:white"class="btn btn-indigo">Retour<i class="fa-regular
+fa-floppy-disk"></i></button>
+      </div>
+    </div>
+  </div>
+</form>
+
     </div>
   </div>
 </div>
 
-
-
-<div class="mt-8 py-5 flex justify-center items-center pagination-button">
- <div class="pagination">
-    <pagination-controls (pageChange)="onTableDataChange($event)" previousLabel="Précédent"
-    nextLabel="Suivant" class="custom-pagination">
-  </pagination-controls>
- </div>
+<div *ngIf="affichPagin === 'valeur1' || affichPagin === 'valeur2'">
+  <div class="mt-8 py-5 flex justify-center items-center pagination-button">
+    <div class="pagination">
+       <pagination-controls (pageChange)="onTableDataChange($event)" previousLabel="Précédent"
+       nextLabel="Suivant" class="custom-pagination">
+     </pagination-controls>
+    </div>
+   </div>
 </div>
-
-
-
-
-

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { ServicesappService } from '../services/servicesapp.service';
 
 @Component({
   selector: 'app-connexion',
@@ -12,18 +13,38 @@ export class ConnexionComponent {
     username: new FormControl(''),
     password: new FormControl(''),
   });
-  constructor(private router: Router) {}
+  localStorage: any;
+  constructor(private router: Router, private fb:FormBuilder, private serviceApp:ServicesappService) {}
+  myForm!:FormGroup;
+  ngOnInit() {
+    this.createForm();
+  }
 
-  ngOnInit() {}
-
+  get g(){
+    return this.myForm.controls;
+  }
+  createForm(){
+    this.myForm = this.fb.group({
+      telephone:['',Validators.required],
+      password: ['',Validators.required]
+    })
+  }
   canShowButton() {
     return (
-      this.loginForm.value.username == ''|| this.loginForm.value.password == ''
+      this.myForm.value.username == ''|| this.myForm.value.password == ''
     );
   }
 
   onSubmit() {
-    const link = ['accueil'];
-    this.router.navigate(link);
+
+    this.serviceApp.connexion(this.myForm.value.telephone,this.myForm.value.password).subscribe(
+      (res)=>{
+        const link = ['accueil'];
+        this.router.navigate(link);
+        const data = res;
+        this.serviceApp.setItem('myData', data);
+      }
+    )
+    //console.log(this.myForm.value.telephone)
   }
 }

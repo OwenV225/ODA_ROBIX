@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AppserviceService } from '../services/appservices.service';
 import { Router } from '@angular/router';
 import { Chart } from 'chart.js';
+import { ServicesappService } from '../services/servicesapp.service';
 @Component({
   selector: 'app-selectionrobo',
   templateUrl: './selectionrobo.component.html',
@@ -12,7 +12,7 @@ export class SelectionroboComponent {
   robots: any[] = [];
   drones: any[] = [];
 
-  constructor(private router:Router, private appservice: AppserviceService){};
+  constructor(private router:Router, private appservice: ServicesappService){};
   ngOnInit(): void {
     this.RenderChart();
     }
@@ -40,20 +40,20 @@ export class SelectionroboComponent {
       });
     }
   getRobot(): void{
-    this.appservice.getUserRobot().subscribe(
-      (res)=>{
-        this.robots = res;
-        console.log(this.robots);
-      }
-    )
+    // this.appservice.getUserRobot().subscribe(
+    //   (res)=>{
+    //     this.robots = res;
+    //     console.log(this.robots);
+    //   }
+    // )
   }
   getDrone(){
-    this.appservice.getUserDrone().subscribe(
-      (res)=>{
-        this.drones = res;
-        console.log(this.drones);
-      }
-    )
+    // this.appservice.getUserDrone().subscribe(
+    //   (res)=>{
+    //     this.drones = res;
+    //     console.log(this.drones);
+    //   }
+    // )
   }
   retour(){
     const link=['accueil'];

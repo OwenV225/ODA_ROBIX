@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AppserviceService } from '../services/appservices.service';
+import { ServicesappService } from '../services/servicesapp.service';
 
 @Component({
   selector: 'app-selectiondrone',
@@ -9,7 +9,7 @@ import { AppserviceService } from '../services/appservices.service';
 })
 export class SelectiondroneComponent {
 
-  constructor(private router:Router, private appservice: AppserviceService){};
+  constructor(private router:Router, private appservice: ServicesappService){};
   ngOnInit() {
 
   }
